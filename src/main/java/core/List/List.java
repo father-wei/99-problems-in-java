@@ -23,7 +23,7 @@ public abstract class List<T> {
                 ret (acc) :
                 sus (() -> this.tail().toString_(
                         acc == "" ?
-                                this.head().toString():
+                                this.head().toString() :
                                 String.format("%s, %s", acc, this.head())));
 
     }
