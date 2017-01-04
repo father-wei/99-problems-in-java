@@ -1,7 +1,7 @@
-package core.List;
+package core.list;
 
 import org.junit.Test;
-import static core.List.List.*;
+import static core.list.List.*;
 import static org.junit.Assert.assertEquals;
 
 
@@ -18,7 +18,7 @@ public class ListTest {
 
     @Test
     public void testTail(){
-        assertEquals( "[2, 3, Nil]" , list(1, 2, 3).tail());
+        assertEquals( "[2, 3, Nil]" , list(1, 2, 3).tail().toString());
     }
 
 

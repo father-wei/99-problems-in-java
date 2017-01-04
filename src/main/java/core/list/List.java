@@ -1,4 +1,4 @@
-package core.List;
+package core.list;
 
 
 import static core.tailcall.TailCall.*;
