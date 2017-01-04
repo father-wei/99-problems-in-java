@@ -11,8 +11,8 @@ public class TupleTest {
     @Test
     public void testTuple(){
         Tuple<String, Integer> tupleTest = new Tuple<>("hello", 123);
-        assertEquals( tupleTest._1(), "hello");
-        assertEquals( tupleTest._2(),  Integer.valueOf(123));
+        assertEquals( tupleTest._1, "hello");
+        assertEquals( tupleTest._2,  Integer.valueOf(123));
 
     }
 }

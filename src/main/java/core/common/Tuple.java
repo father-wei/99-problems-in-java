@@ -5,20 +5,13 @@ package core.common;
  */
 public class Tuple<T, U> {
 
-    private final T first;
+    public final T _1;
 
-    private final U second;
+    public final U _2;
 
     public Tuple (T first, U second){
-        this.first  =  first;
-        this.second = second;
+        this._1  =  first;
+        this._2 = second;
     }
 
-    public T _1() {
-        return this.first;
-    }
-
-    public U _2() {
-        return this.second;
-    }
 }
