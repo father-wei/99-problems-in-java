@@ -4,6 +4,9 @@ package core.list;
 import static core.tailcall.TailCall.*;
 import core.tailcall.TailCall;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 public abstract class List<T> {
 
     public abstract T head();
@@ -90,4 +93,49 @@ public abstract class List<T> {
     }
 
 
+    // not a tailcall, unsafe
+   /* public <U> U foldRight(U acc, BiFunction<U, T, U> f) {
+        return this.isEmpty()?
+                acc :
+                f.apply(this.tail().foldRight(acc, f), this.head());
+    }*/
+
+   // tailcall, safe
+    public <U> U foldRight(U acc, BiFunction<T, U, U> f){
+        return this.reverse().foldLeft(acc, (u, t) -> f.apply(t, u));
+    }
+
+
+
+    // tailcall, safe
+    public <U> U foldLeft(U acc, BiFunction<U, T, U> f) {
+        return foldLeft_(acc, f).eval();
+    }
+
+
+    private  <U> TailCall<U> foldLeft_(U acc, BiFunction<U, T, U> f) {
+        return this.isEmpty()?
+                ret(acc) :
+                sus(()-> this.tail().foldLeft_(f.apply(acc, this.head()), f));
+    }
+
+
+    public List<T> reverse(){
+        return this.foldLeft(NIL, (acc, head) -> new Cons<>(head, acc));
+    }
+
+    public List<T> concat(List<T> ls){
+        return this.foldRight(ls, (head, acc) -> new Cons<>(head,acc));
+    }
+
+    public <U> List<U> map (Function<T, U> f) {
+        return this.foldRight(NIL, (t, acc) -> new Cons<>(f.apply(t), acc));
+    }
+
+
+    public <U> List<U> flatMap(Function<T, List<U>> f) {
+        return this.foldRight(NIL,
+                                (t, acc) -> f.apply(t)
+                                             .concat(this.tail().flatMap(f)));
+    }
 }
