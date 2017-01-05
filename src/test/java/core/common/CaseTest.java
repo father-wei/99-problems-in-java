@@ -2,6 +2,7 @@ package core.common;
 import static org.junit.Assert.assertEquals;
 import static core.common.Case.*;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Test;
 
 import java.util.function.Function;
@@ -15,20 +16,20 @@ public class CaseTest {
     @Test
     public void caseTest(){
 
-        Supplier<String> defalutResult = ()-> "not found";
-        Supplier<String> result = ()-> "hello world";
 
-        Function<String, String> stringMatchTest =
+        Function<String, Result<String>> stringMatchTest =
                 str -> match(
-                    mCase(defalutResult),
-                    mCase(()-> str == "hello", result),
-                    mCase(()-> str == "world", result)
+                    mCase(Result.empty()),
+                    mCase(()-> str == "hello", ()->Result.success("HelloWorld")),
+                    mCase(()-> str == "world", ()->Result.success("HelloWorld"))
                 );
 
-        assertEquals("not found",   stringMatchTest.apply(null));
-        assertEquals("not found",   stringMatchTest.apply("something else"));
-        assertEquals("hello world", stringMatchTest.apply("hello"));
-        assertEquals("hello world", stringMatchTest.apply("world"));
+
+        assertEquals("Empty()",   stringMatchTest.apply(null).toString());
+        assertEquals("HelloWorld", stringMatchTest.apply("hello").getOrElse("something else"));
+        assertEquals("HelloWorld", stringMatchTest.apply("world").getOrElse("something else"));
+
+       // assertEquals("hello world", stringMatchTest.apply("world"));
     }
 
 }
