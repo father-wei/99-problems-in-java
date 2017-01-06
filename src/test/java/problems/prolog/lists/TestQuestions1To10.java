@@ -2,14 +2,13 @@ package problems.prolog.lists;
 
 import org.junit.Test;
 
-import static problems.prolog.lists.Questions1To28.*;
 import static org.junit.Assert.assertEquals;
 import static core.list.List.*;
 
 
-public class TestQuestions1To28 {
+public class TestQuestions1To10 {
 
-    Questions1To28<Integer> questions = new Questions1To28<>();
+    Questions1To10<Integer> questions = new Questions1To10<>();
 
     @Test
     public void testQuestion1(){

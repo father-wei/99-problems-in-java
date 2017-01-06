@@ -9,7 +9,7 @@ import java.util.function.Function;
 import static core.common.Case.*;
 
 
-public class Questions1To28<T> {
+public class Questions1To10<T> {
 
     /*
      *    Question 1
