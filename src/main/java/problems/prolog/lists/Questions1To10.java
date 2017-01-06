@@ -1,6 +1,5 @@
 package problems.prolog.lists;
 
-import com.sun.org.apache.regexp.internal.RE;
 import core.common.Result;
 import core.common.Tuple;
 import core.list.List;
@@ -49,7 +48,7 @@ public class Questions1To10<T> {
             kthEle = (ls, n) -> match
             (
                 mCase(Result.failure("Can not find the kth element from the List")),
-                mCase(() -> ls.isEmpty(),   ()-> Result.failure("Exceed the boundary")),
+                mCase(() -> ls.isEmpty(),   ()->  Result.failure("Exceed the boundary")),
                 mCase(() -> n  <  0,        () -> Result.failure("Input number cannot be navigate")),
                 mCase(() -> n  == 0,        () -> Result.success(ls.head())),
                 mCase(() -> n  >  0,        () -> this.kthEle.apply(ls.tail(), n - 1))

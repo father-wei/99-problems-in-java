@@ -10,9 +10,10 @@ public class TestQuestions1To10 {
 
     Questions1To10<Integer> questions = new Questions1To10<>();
 
+    //Find the last element of a list.
     @Test
     public void testQuestion1(){
-        //Find the last element of a list.
+
         int lastValue = questions.last.apply(list(1,2,3,4,5)).getOrThrow();
         assertEquals(5, lastValue);
 
@@ -20,10 +21,10 @@ public class TestQuestions1To10 {
         assertEquals(-9999999, errorTest);
     }
 
-
+    //Find the last but one element of a list.
     @Test
     public void testQuestion2(){
-        //Find the last but one element of a list.
+
         int lastButOneValue = questions.lastButOne.apply(list(1,2,3,4,5)).getOrThrow();
         assertEquals(4, lastButOneValue);
 
@@ -36,9 +37,10 @@ public class TestQuestions1To10 {
     }
 
 
+    //Find the Kth element of a list.
     @Test
     public void testQuestion3(){
-        //Find the Kth element of a list.
+
         int kthEle = questions.kthEle.apply(list( 0, 1, 2, 3, 4, 5) , 3).getOrThrow();
         assertEquals(3, kthEle);
 
@@ -47,50 +49,59 @@ public class TestQuestions1To10 {
 
     }
 
-
+    //Find the number of elements of a list.
     @Test
     public void testQuestion4(){
-        //Find the number of elements of a list.
+
         assertEquals(Integer.valueOf(5), questions.length.apply(list(1,2,3,4,5)));
         assertEquals(Integer.valueOf(0), questions.length.apply(list()));
 
     }
 
+    //Reverse a list
     @Test
     public void testQuestion5(){
-        //Reverse a list
+
         assertEquals("[5, 4, 3, 2, 1, Nil]", questions.reverse.apply(list(1,2,3,4,5)).toString());
     }
 
+    //Find out whether a list is a palindrome
     @Test
     public void testQuestion6(){
-        //Find out whether a list is a palindrome
+
         assertEquals(true, questions.isPalindrome.apply(list(1,2,2,1)) );
         assertEquals(false, questions.isPalindrome.apply(list(1,2,2,1,1)) );
     }
 
 
+    // Flatten a nested list structure.
     @Test
     public void testQuestion7() {
-        // Flatten a nested list structure.
+
         assertEquals("[1, 2, 3, Nil]", questions.flatten.apply(list(1, list(2,3))).toString());
 
         assertEquals("[1, 2, 3, Nil]", questions.flatten.apply(list(1, list(2, list(3)))).toString());
 
     }
 
+
+    //Eliminate consecutive duplicates of list elements.
     @Test
     public void testQuestion8() {
         assertEquals("[1, 2, 3, Nil]", questions.compress.apply(list(1,1,2,2,3,3,3)).toString());
     }
 
+
+    //Pack consecutive duplicates of list elements into sublists.
     @Test
     public void testQuestion9() {
         assertEquals("[[1, 1, Nil], [2, 2, Nil], Nil]", questions.pack.apply(list(1,1,2,2)).toString());
     }
 
+
+    //Run-length encoding of a list.
     @Test
-    public void testEnCode(){
+    public void testQuestion10(){
         assertEquals("[(2, 1), (2, 2), Nil]", questions.encode.apply(list(1,1,2,2)).toString());
     }
 }

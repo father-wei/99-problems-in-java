@@ -7,6 +7,7 @@ import core.common.Result;
 import core.common.Tuple;
 import core.tailcall.TailCall;
 
+import java.lang.reflect.Array;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -56,6 +57,9 @@ public abstract class List<T> {
 
         return n;
     }
+
+
+
 
     private List(){}
 
