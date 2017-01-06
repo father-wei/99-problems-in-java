@@ -2,6 +2,7 @@ package problems.prolog.lists;
 
 import com.sun.org.apache.regexp.internal.RE;
 import core.common.Result;
+import core.common.Tuple;
 import core.list.List;
 
 import java.util.function.BiFunction;
@@ -106,6 +107,24 @@ public class Questions1To10<T> {
      *    Question 9
      *    Pack consecutive duplicates of list elements into sublists.
      */
+    public Function<List<T>, List<List<T>>> pack =
+            ls ->  ls.isEmpty()?
+                        NIL:
+                        list(ls.span()._1).concat(this.pack.apply(ls.span()._2));
+
+    /*
+     *    Question 10
+     *    Run-length encoding of a list.
+     */
+    public Function<List<T>, List<Tuple<Integer, T>>> encode = ls -> this.pack.andThen(this.encode_).apply(ls);
+
+    private Function<List<List<T>>, List<Tuple<Integer, T>>> encode_ =
+            ls -> ls.map(
+                    (List<T> head) ->
+                            new Tuple<Integer, T>( head.getLength(), head.head())
+
+            );
+
 
 
 

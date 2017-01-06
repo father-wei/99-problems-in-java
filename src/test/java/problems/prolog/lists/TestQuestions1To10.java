@@ -71,7 +71,7 @@ public class TestQuestions1To10 {
 
 
     @Test
-    public void testQuestion7(){
+    public void testQuestion7() {
         // Flatten a nested list structure.
         assertEquals("[1, 2, 3, Nil]", questions.flatten.apply(list(1, list(2,3))).toString());
 
@@ -80,7 +80,26 @@ public class TestQuestions1To10 {
     }
 
     @Test
-    public void testQuestion8(){
+    public void testQuestion8() {
         assertEquals("[1, 2, 3, Nil]", questions.compress.apply(list(1,1,2,2,3,3,3)).toString());
+    }
+
+    @Test
+    public void testQuestion9() {
+        assertEquals("[[1, 1, Nil], [2, 2, Nil], Nil]", questions.pack.apply(list(1,1,2,2)).toString());
+    }
+
+    @Test
+    public void testEnCode(){
+        int count1 = questions.encode.apply(list(1,1,2,2)).head()._1;
+        int result1 = questions.encode.apply(list(1,1,2,2)).head()._2;
+        assertEquals(2, count1);
+        assertEquals(1, result1);
+
+        int count2 = questions.encode.apply(list(1,1,2,2)).tail().head()._1;
+        int result2 = questions.encode.apply(list(1,1,2,2)).tail().head()._2;
+        assertEquals(2, count2);
+        assertEquals(2, result2);
+
     }
 }

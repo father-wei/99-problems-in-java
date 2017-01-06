@@ -4,11 +4,14 @@ package core.list;
 import static core.tailcall.TailCall.*;
 
 import core.common.Result;
+import core.common.Tuple;
 import core.tailcall.TailCall;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import static core.common.Case.*;
+import static core.tailcall.TailCall.ret;
 
 public abstract class List<T> {
 
@@ -153,7 +156,22 @@ public abstract class List<T> {
                                 (t, acc) -> f.apply(t)
                                              .concat(this.tail().flatMap(f)));
     }
-    
+
+    public Tuple<List<T>, List<T>> span (){
+        return span_(this, new Tuple<List<T>, List<T>>(list(), list())).eval();
+    }
+
+    private TailCall<Tuple<List<T>, List<T>>> span_ (List<T> ls, Tuple<List<T>, List<T>> acc){
+
+        return ls.isEmpty() ?
+                    ret (acc) :
+                        acc._1.isEmpty() ?
+                            sus (() -> span_ (ls.tail(), new Tuple<>(acc._1.concat(list(ls.head())), acc._2 ))) :
+                                    acc._1.head().equals(ls.head()) ?
+                                        sus (() -> span_ (ls.tail(), new Tuple<>(acc._1.concat(list(ls.head())), acc._2 ))) :
+                                        sus (() -> span_ (NIL, new Tuple<>(acc._1, ls)));
+
+    }
 
     @Override
     public boolean equals(Object o){

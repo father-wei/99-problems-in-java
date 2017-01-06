@@ -77,11 +77,18 @@ public class ListTest {
 
 
     @Test
-    public void testEquals(){
+    public void testEquals() {
         assertEquals(true, list().equals(list()));
         assertEquals(true, list(1).equals(list(1)));
         assertEquals(false, list(1, 2).equals(list(1)));
     }
+
+    @Test
+    public void testSpan() {
+        assertEquals("[1, 1, 1, Nil]", list(1,1,1,2,3,4).span()._1.toString());
+        assertEquals("[2, 3, 4, Nil]", list(1,1,1,2,3,4).span()._2.toString());
+    }
+
 
 
 }
