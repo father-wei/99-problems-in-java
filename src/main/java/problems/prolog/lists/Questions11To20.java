@@ -1,14 +1,11 @@
 package problems.prolog.lists;
 
-import core.common.Result;
 import core.common.Tuple;
 import core.list.List;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 import static core.common.Case.*;
 import static core.list.List.*;
@@ -83,9 +80,9 @@ public class Questions11To20<T> {
      */
     BiFunction<Integer,List<T>, List<T>> duplicateN =
             (n, ls) -> ls.flatMap(
-                  x->
-                    this.multiple.apply(n, x)
+                  x-> this.multiple.apply(n, x)
             );
+
 
 
 }
