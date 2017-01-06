@@ -52,7 +52,7 @@ public class Questions11To20<T> {
                     list(x).concat(this.multiple.apply(i-1, x));
 
 
-    
+
 
 
 }

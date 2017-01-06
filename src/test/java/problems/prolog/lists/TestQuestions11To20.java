@@ -18,6 +18,7 @@ public class TestQuestions11To20 {
     }
 
 
+    //Decode a run-length encoded list
     @Test
     public void testQuestion12(){
         assertEquals("[a, a, a, b, b, Nil]", testInstance.decode.apply(list(new Tuple<>(3, 'a'), new Tuple<>(2, 'b'))).toString());
