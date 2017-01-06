@@ -69,8 +69,18 @@ public class ListTest {
 
     }
 
+    @Test
+    public void testGetLength(){
+        assertEquals(5, list(1,2,3,4,5).getLength());
+    }
 
 
+    @Test
+    public void testEquals(){
+        assertEquals(true, list().equals(list()));
+        assertEquals(true, list(1).equals(list(1)));
+        assertEquals(false, list(1, 2).equals(list(1)));
+    }
 
 
 }

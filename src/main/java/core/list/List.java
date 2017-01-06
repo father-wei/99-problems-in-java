@@ -2,10 +2,13 @@ package core.list;
 
 
 import static core.tailcall.TailCall.*;
+
+import core.common.Result;
 import core.tailcall.TailCall;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import static core.common.Case.*;
 
 public abstract class List<T> {
 
@@ -14,6 +17,8 @@ public abstract class List<T> {
     public abstract List<T> tail();
 
     public abstract boolean isEmpty();
+
+    public abstract int getLength();
 
 
     @Override
@@ -65,17 +70,22 @@ public abstract class List<T> {
             return true;
         }
 
+        public int getLength(){
+            return 0;
+        }
+
     }
 
     private static class Cons<T> extends List<T> {
 
         private final T head;
-
         private final List<T> tail;
+        private final int length;
 
         private Cons(T head, List<T> tail){
             this.head = head;
             this.tail = tail;
+            this.length = tail.getLength() + 1;
         }
 
         public T head(){
@@ -90,6 +100,10 @@ public abstract class List<T> {
             return false;
         }
 
+        public int getLength(){
+            return this.length;
+        }
+
     }
 
 
@@ -99,6 +113,7 @@ public abstract class List<T> {
                 acc :
                 f.apply(this.tail().foldRight(acc, f), this.head());
     }*/
+
 
    // tailcall, safe
     public <U> U foldRight(U acc, BiFunction<T, U, U> f){
@@ -138,4 +153,31 @@ public abstract class List<T> {
                                 (t, acc) -> f.apply(t)
                                              .concat(this.tail().flatMap(f)));
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o)
+            return true;
+
+        if (o == null)
+            return false;
+
+        if (getClass() != o.getClass())
+            return false;
+        List<T> ls = (List<T>) o;
+
+
+        return equals.apply(this, ls).getOrElse(false);
+    }
+
+    private BiFunction<List<T>, List<T>, Result<Boolean>> equals =
+            (ls1, ls2) -> match
+            (
+                mCase(Result.success(false)),
+                mCase(()-> ls1.isEmpty() && ls2.isEmpty(),    ()-> Result.success(true)),
+                mCase(()-> (ls1.isEmpty() && !ls2.isEmpty())  || (!ls1.isEmpty() && ls2.isEmpty()),  ()-> Result.success(false)),
+                mCase(()-> ls1.head().equals(ls2.head()),     ()-> this.equals.apply(ls1.tail(), ls2.tail()))
+            );
+
+
 }

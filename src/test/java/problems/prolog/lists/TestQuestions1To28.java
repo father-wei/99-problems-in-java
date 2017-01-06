@@ -13,6 +13,7 @@ public class TestQuestions1To28 {
 
     @Test
     public void testQuestion1(){
+        //Find the last element of a list.
         int lastValue = questions.last.apply(list(1,2,3,4,5)).getOrElse(-9999999);
         assertEquals(5, lastValue);
 
@@ -23,6 +24,7 @@ public class TestQuestions1To28 {
 
     @Test
     public void testQuestion2(){
+        //Find the last but one element of a list.
         int lastButOneValue = questions.lastButOne.apply(list(1,2,3,4,5)).getOrElse(-9999999);
         assertEquals(4, lastButOneValue);
 
@@ -37,6 +39,7 @@ public class TestQuestions1To28 {
 
     @Test
     public void testQuestion3(){
+        //Find the Kth element of a list.
         int kthEle = questions.kthEle.apply(list( 0, 1, 2, 3, 4, 5) , 3).getOrElse(-999999);
         assertEquals(3, kthEle);
 
@@ -45,5 +48,26 @@ public class TestQuestions1To28 {
 
     }
 
+
+    @Test
+    public void testQuestion4(){
+        //Find the number of elements of a list.
+        assertEquals(Integer.valueOf(5), questions.length.apply(list(1,2,3,4,5)));
+        assertEquals(Integer.valueOf(0), questions.length.apply(list()));
+
+    }
+
+    @Test
+    public void testQuestion5(){
+        //Reverse a list
+        assertEquals("[5, 4, 3, 2, 1, Nil]", questions.reverse.apply(list(1,2,3,4,5)).toString());
+    }
+
+    @Test
+    public void testQuestion6(){
+        //Find out whether a list is a palindrome
+        assertEquals(true, questions.isPalindrome.apply(list(1,2,2,1)) );
+        assertEquals(false, questions.isPalindrome.apply(list(1,2,2,1,1)) );
+    }
 
 }
