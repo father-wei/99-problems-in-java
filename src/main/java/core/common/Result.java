@@ -17,6 +17,8 @@ public abstract class Result <V> implements Serializable {
 
     public abstract <U> Result<U> flatMap(Function<V, Result<U>> f);
 
+    public abstract V getOrThrow();
+
     // implement orElse
     public Result<V> orElse(Supplier<Result<V>> defaultValue){
 
@@ -68,6 +70,10 @@ public abstract class Result <V> implements Serializable {
             return failure(exception);
         }
 
+        @Override
+        public V getOrThrow() {
+            throw exception;
+        }
 
     }
 
@@ -116,6 +122,11 @@ public abstract class Result <V> implements Serializable {
 
         }
 
+        @Override
+        public V getOrThrow() {
+            return value;
+        }
+
     }
 
     private static Result empty = new Empty();
@@ -143,6 +154,10 @@ public abstract class Result <V> implements Serializable {
         @Override
         public V getOrElse(Supplier<V> defaultValue) {
             return defaultValue.get();
+        }
+        @Override
+        public V getOrThrow() {
+            throw new IllegalStateException("Empty result");
         }
     }
 

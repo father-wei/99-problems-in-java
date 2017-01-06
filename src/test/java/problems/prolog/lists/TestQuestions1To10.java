@@ -13,7 +13,7 @@ public class TestQuestions1To10 {
     @Test
     public void testQuestion1(){
         //Find the last element of a list.
-        int lastValue = questions.last.apply(list(1,2,3,4,5)).getOrElse(-9999999);
+        int lastValue = questions.last.apply(list(1,2,3,4,5)).getOrThrow();
         assertEquals(5, lastValue);
 
         int errorTest = questions.last.apply(list()).getOrElse(-9999999);
@@ -24,7 +24,7 @@ public class TestQuestions1To10 {
     @Test
     public void testQuestion2(){
         //Find the last but one element of a list.
-        int lastButOneValue = questions.lastButOne.apply(list(1,2,3,4,5)).getOrElse(-9999999);
+        int lastButOneValue = questions.lastButOne.apply(list(1,2,3,4,5)).getOrThrow();
         assertEquals(4, lastButOneValue);
 
         int errorTest1 = questions.lastButOne.apply(list()).getOrElse(-9999999);
@@ -39,7 +39,7 @@ public class TestQuestions1To10 {
     @Test
     public void testQuestion3(){
         //Find the Kth element of a list.
-        int kthEle = questions.kthEle.apply(list( 0, 1, 2, 3, 4, 5) , 3).getOrElse(-999999);
+        int kthEle = questions.kthEle.apply(list( 0, 1, 2, 3, 4, 5) , 3).getOrThrow();
         assertEquals(3, kthEle);
 
         int errorTest = questions.kthEle.apply(list(0, 1), 5).getOrElse(-9999999);
@@ -91,15 +91,6 @@ public class TestQuestions1To10 {
 
     @Test
     public void testEnCode(){
-        int count1 = questions.encode.apply(list(1,1,2,2)).head()._1;
-        int result1 = questions.encode.apply(list(1,1,2,2)).head()._2;
-        assertEquals(2, count1);
-        assertEquals(1, result1);
-
-        int count2 = questions.encode.apply(list(1,1,2,2)).tail().head()._1;
-        int result2 = questions.encode.apply(list(1,1,2,2)).tail().head()._2;
-        assertEquals(2, count2);
-        assertEquals(2, result2);
-
+        assertEquals("[(2, 1), (2, 2), Nil]", questions.encode.apply(list(1,1,2,2)).toString());
     }
 }

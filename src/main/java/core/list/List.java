@@ -175,18 +175,14 @@ public abstract class List<T> {
 
     @Override
     public boolean equals(Object o){
-        if (this == o)
-            return true;
+        return this == o?
+                    true :
+                    o == null?
+                         false :
+                         getClass() != o.getClass()?
+                                 false:
+                                 equals.apply(this, (List<T>) o).getOrElse(false);
 
-        if (o == null)
-            return false;
-
-        if (getClass() != o.getClass())
-            return false;
-        List<T> ls = (List<T>) o;
-
-
-        return equals.apply(this, ls).getOrElse(false);
     }
 
     private BiFunction<List<T>, List<T>, Result<Boolean>> equals =

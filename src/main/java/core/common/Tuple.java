@@ -14,4 +14,8 @@ public class Tuple<T, U> {
         this._2 = second;
     }
 
+    @Override
+    public String toString(){
+        return String.format("(%s, %s)", _1, _2);
+    }
 }
