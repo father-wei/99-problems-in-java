@@ -41,6 +41,7 @@ public class ListTest {
     @Test
     public void testConcat(){
         assertEquals("[1, 2, 3, 4, Nil]", list(1,2).concat(list(3,4)).toString());
+        assertEquals("[1, Nil]", list(1).concat(list()).toString());
     }
 
     @Test

@@ -69,4 +69,18 @@ public class TestQuestions1To10 {
         assertEquals(false, questions.isPalindrome.apply(list(1,2,2,1,1)) );
     }
 
+
+    @Test
+    public void testQuestion7(){
+        // Flatten a nested list structure.
+        assertEquals("[1, 2, 3, Nil]", questions.flatten.apply(list(1, list(2,3))).toString());
+
+        assertEquals("[1, 2, 3, Nil]", questions.flatten.apply(list(1, list(2, list(3)))).toString());
+
+    }
+
+    @Test
+    public void testQuestion8(){
+        assertEquals("[1, 2, 3, Nil]", questions.compress.apply(list(1,1,2,2,3,3,3)).toString());
+    }
 }

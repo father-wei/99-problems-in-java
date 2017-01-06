@@ -7,7 +7,7 @@ import core.list.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import static core.common.Case.*;
-
+import static core.list.List.*;
 
 public class Questions1To10<T> {
 
@@ -73,6 +73,41 @@ public class Questions1To10<T> {
      *    Find out whether a list is a palindrome.
      */
     public Function<List<T>, Boolean> isPalindrome = ls -> ls.equals(ls.reverse());
+
+
+    /*
+     *    Question 7
+     *    Flatten a nested list structure.
+     */
+    public Function<List, List> flatten =
+            ls -> ls.flatMap(
+                    head-> head instanceof List?
+                                this.flatten.apply((List)head) :
+                                list(head)
+            );
+
+
+    /*
+     *    Question 8
+     *    Eliminate consecutive duplicates of list elements.
+     */
+    public Function<List<T>, List<T>> compress =
+            ls -> ls.foldRight(
+                    NIL,
+                    (head, acc) -> acc.isEmpty()?
+                                        list(head) :
+                                        acc.head().equals(head)?
+                                                acc:
+                                                list(head).concat(acc)
+            );
+
+
+    /*
+     *    Question 9
+     *    Pack consecutive duplicates of list elements into sublists.
+     */
+
+
 
 
 }
