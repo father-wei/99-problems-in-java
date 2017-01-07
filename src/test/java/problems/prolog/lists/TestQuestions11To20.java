@@ -57,7 +57,7 @@ public class TestQuestions11To20 {
     //Split a list into two parts.
     @Test
     public void testQuestion17(){
-        assertEquals("([a, b, c, Nil], [e, f, g, h, i, j, k, Nil])", testInstance.split.apply(3, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
+        assertEquals("([a, b, c, d, Nil], [e, f, g, h, i, j, k, Nil])", testInstance.split.apply(3, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
     }
 
     //Extract a slice from a list.
@@ -66,4 +66,20 @@ public class TestQuestions11To20 {
         assertEquals("[d, e, f, g, Nil]",  testInstance.slice(3, 7, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
 
     }
+
+    //Rotate a list N places to the left.
+    @Test
+    public void testQuestion19() {
+        assertEquals("[d, e, f, g, h, i, j, k, a, b, c, Nil]",  testInstance.rotate(3, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
+
+        assertEquals("[j, k, a, b, c, d, e, f, g, h, i, Nil]",  testInstance.rotate(-2, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
+    }
+
+
+    //Remove the Kth element from a list.
+    @Test
+    public void testQuestion20(){
+        assertEquals("([a, c, d, Nil], b)", testInstance.removeAt.apply(1, list('a', 'b', 'c', 'd')).toString()) ;
+    }
+
 }

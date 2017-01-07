@@ -1,5 +1,6 @@
 package problems.prolog.lists;
 
+import core.common.Result;
 import core.common.Tuple;
 import core.list.List;
 
@@ -109,7 +110,7 @@ public class Questions11To20<T> {
             (n, ls) -> ls.isEmpty() ?
                             new Tuple<>(list(), list()) :
                                 n == 0?
-                                    new Tuple<>(list(), ls.tail()) :
+                                    new Tuple<>(list(ls.head()), ls.tail()) :
                                     new Tuple<>(list(ls.head())
                                             .concat(this.split.apply(n-1, ls.tail())._1),
                                                     this.split.apply(n-1, ls.tail())._2);
@@ -120,13 +121,46 @@ public class Questions11To20<T> {
      */
     private Function<Integer, Function<Integer, Function<List<T>, List<T>>>> slice =
             start -> end ->  ls ->
-                    this.split.apply( end - start,
-                            this.split.apply(start -1, ls)._2)._1;
+                    this.split.apply( end - start - 1,
+                            this.split.apply(start - 1, ls)._2)._1;
     // curring cannot be call outside of class.. is this a java 8 bug?
     // wrap it into method
     public List<T> slice(int start, int end, List<T> ls){
         return this.slice.apply(start).apply(end).apply(ls);
     }
+
+
+    /*
+     *    Question 19
+     *    Rotate a list N places to the left.
+     */
+    public List<T> rotate(int i, List<T> ls){
+        return this.rotate_.apply(i, ls).getOrThrow();
+    }
+
+    private BiFunction<Integer, List<T>, Result<List<T>>> rotate_ =
+            (n, ls) -> match(
+                     mCase(Result.failure("Rotate error")),
+                     mCase(() -> n == 0, () -> Result.success(ls)),
+                     mCase(() -> n > 0 , () -> {
+                                                Tuple<List<T>, List<T>> tuple = this.split.apply(n % ls.getLength() -1 , ls);
+                                                return Result.success(tuple._2.concat(tuple._1));
+                                             }),
+                     mCase(() -> n < 0, () -> this.rotate_.apply(ls.getLength() + n, ls)
+                 )
+            );
+
+
+
+    /*
+     *    Question 19
+     *    Remove the Kth element from a list.
+     */
+    public BiFunction<Integer, List<T>, Tuple<List<T>, T>> removeAt =
+            (i, ls) ->{
+                Tuple<List<T>, List<T>> tuple = this.split.apply(i - 1, ls);
+                return new Tuple<>(tuple._1.concat(tuple._2.tail()), tuple._2.head()) ;
+            };
 
 
 }
