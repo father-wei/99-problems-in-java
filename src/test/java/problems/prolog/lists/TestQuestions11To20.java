@@ -1,9 +1,11 @@
 package problems.prolog.lists;
+import core.list.List;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static core.list.List.*;
 import core.common.Tuple;
 
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class TestQuestions11To20 {
@@ -45,4 +47,23 @@ public class TestQuestions11To20 {
     }
 
 
+    //Drop every Nth element from a list.
+    @Test
+    public void testQuestion16(){
+        assertEquals("[a, b, d, e, g, h, j, k, Nil]", testInstance.drop.apply (3, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
+    }
+
+
+    //Split a list into two parts.
+    @Test
+    public void testQuestion17(){
+        assertEquals("([a, b, c, Nil], [e, f, g, h, i, j, k, Nil])", testInstance.split.apply(3, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
+    }
+
+    //Extract a slice from a list.
+    @Test
+    public void testQuestion18(){
+        assertEquals("[d, e, f, g, Nil]",  testInstance.slice(3, 7, list('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')).toString());
+
+    }
 }

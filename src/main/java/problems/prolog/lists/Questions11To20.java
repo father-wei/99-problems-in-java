@@ -68,7 +68,7 @@ public class Questions11To20<T> {
      *    Question 14
      *    Duplicate the elements of a list
      */
-    Function<List<T>, List<T>> duplicate =
+    public Function<List<T>, List<T>> duplicate =
             ls -> ls.flatMap(
                 x -> list(x, x)
             );
@@ -78,11 +78,55 @@ public class Questions11To20<T> {
      *    Question 15
      *    Duplicate the elements of a list a given number of times.
      */
-    BiFunction<Integer,List<T>, List<T>> duplicateN =
+    public BiFunction<Integer,List<T>, List<T>> duplicateN =
             (n, ls) -> ls.flatMap(
                   x-> this.multiple.apply(n, x)
             );
 
+
+
+    /*
+     *    Question 16
+     *    Drop every Nth element from a list.
+     */
+    public BiFunction<Integer, List<T>, List<T>> drop =
+            (n, ls) ->  this.drop_.apply(n).apply(n, ls);
+
+
+    private Function<Integer, BiFunction<Integer, List<T>, List<T>>> drop_ =
+            n -> (count, ls) ->
+                    ls.isEmpty()?
+                            NIL:
+                                count == 1 ?
+                                    this.drop_.apply(n).apply(n, ls.tail()):
+                                    list(ls.head()).concat(this.drop_.apply(n).apply(count -1, ls.tail()));
+
+    /*
+     *    Question 17
+     *    Split a list into two parts.
+     */
+    public BiFunction<Integer, List<T>, Tuple<List<T>, List<T>>> split =
+            (n, ls) -> ls.isEmpty() ?
+                            new Tuple<>(list(), list()) :
+                                n == 0?
+                                    new Tuple<>(list(), ls.tail()) :
+                                    new Tuple<>(list(ls.head())
+                                            .concat(this.split.apply(n-1, ls.tail())._1),
+                                                    this.split.apply(n-1, ls.tail())._2);
+
+    /*
+     *    Question 18
+     *    Extract a slice from a list.
+     */
+    private Function<Integer, Function<Integer, Function<List<T>, List<T>>>> slice =
+            start -> end ->  ls ->
+                    this.split.apply( end - start,
+                            this.split.apply(start -1, ls)._2)._1;
+    // curring cannot be call outside of class.. is this a java 8 bug?
+    // wrap it into method
+    public List<T> slice(int start, int end, List<T> ls){
+        return this.slice.apply(start).apply(end).apply(ls);
+    }
 
 
 }
