@@ -90,5 +90,10 @@ public class ListTest {
     }
 
 
+    @Test
+    public void testRange(){
+        assertEquals("[1, 2, 3, Nil]", List.range(1, 3).toString());
+    }
+
 
 }

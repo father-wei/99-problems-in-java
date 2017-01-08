@@ -9,8 +9,12 @@ import core.tailcall.TailCall;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import static core.common.Case.*;
 import static core.tailcall.TailCall.ret;
+
 
 public abstract class List<T> {
 
@@ -175,6 +179,15 @@ public abstract class List<T> {
 
     }
 
+
+    public static <T> List<T> range(int start, int end){
+        List list = list();
+        for (int i : IntStream.rangeClosed(start,end).toArray()) {
+            list = new Cons(i, list);
+        }
+        return  list.reverse();
+    }
+
     @Override
     public boolean equals(Object o){
         return this == o?
@@ -195,6 +208,7 @@ public abstract class List<T> {
                 mCase(()-> (ls1.isEmpty() && !ls2.isEmpty())  || (!ls1.isEmpty() && ls2.isEmpty()),  ()-> Result.success(false)),
                 mCase(()-> ls1.head().equals(ls2.head()),     ()-> this.equals.apply(ls1.tail(), ls2.tail()))
             );
+
 
 
 }

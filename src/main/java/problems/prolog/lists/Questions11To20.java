@@ -153,13 +153,17 @@ public class Questions11To20<T> {
 
 
     /*
-     *    Question 19
+     *    Question 20
      *    Remove the Kth element from a list.
      */
     public BiFunction<Integer, List<T>, Tuple<List<T>, T>> removeAt =
             (i, ls) ->{
-                Tuple<List<T>, List<T>> tuple = this.split.apply(i - 1, ls);
-                return new Tuple<>(tuple._1.concat(tuple._2.tail()), tuple._2.head()) ;
+                if( i == 0 ){
+                    return new Tuple<>(ls.tail(), ls.head()) ;
+                } else {
+                    Tuple<List<T>, List<T>> tuple = this.split.apply(i - 1, ls);
+                    return new Tuple<>(tuple._1.concat(tuple._2.tail()), tuple._2.head()) ;
+                }
             };
 
 

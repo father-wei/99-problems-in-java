@@ -80,6 +80,7 @@ public class TestQuestions11To20 {
     @Test
     public void testQuestion20(){
         assertEquals("([a, c, d, Nil], b)", testInstance.removeAt.apply(1, list('a', 'b', 'c', 'd')).toString()) ;
+        assertEquals("([b, c, d, Nil], a)", testInstance.removeAt.apply(0, list('a', 'b', 'c', 'd')).toString()) ;
     }
 
 }
