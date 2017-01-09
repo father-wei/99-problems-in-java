@@ -82,11 +82,55 @@ public class Questions21To28<T> {
     }
 
 
+    /*
+     *    Question 26
+     *    Generate the combinations of K distinct objects chosen from the N elements of a list.
+     */
+    public List<List<T>> combinations(int i, List<T> ls){
+        return ls.getLength() > i ?
+                    this.combinations_.apply(i, ls).concat(this.combinations(i, ls.tail())):
+                    list(ls);
+    }
+
+    private BiFunction<Integer, List<T>, List<List<T>>> combinations_ =
+            (i, ls) ->
+                    i == 1 ?
+                       ls.map( x-> list(x)):
+                       this.combinations_.apply(i - 1, ls.tail())
+                               .map( x-> list(ls.head()).concat(x) );
+
+
+     /*
+     *    Question 27
+     *    Group the elements of a set into disjoint subsets.
+     */
+    //    9 elements with 2, 3, 4
+    public List<List<List<T>>> group3(List<T> ls){
+        return this.combinations(2, ls)
+                .flatMap(
+                    x->  this.combinations(3, List.diff(ls, x)).map(
+                                    y-> list(x, y, List.diff(List.diff(ls, x), y))
+                    )
+                );
+    }
+
+    /*
+     *    Question 28
+     *    Sorting a list of lists according to length of sublists.
+     */
+    public Function<List<List<T>>, List<List<T>>> lsort =
+            ls -> ls.map( l-> new Tuple<>(l.getLength(), l) )
+                    .foldRight(  NIL, (t, acc)-> this.insert.apply(t, acc));
 
 
 
-
-
+    private BiFunction<Tuple<Integer, List<T>>, List<List<T>> , List<List<T>>> insert =
+            (t, ls) ->
+                    ls.isEmpty()?
+                            list(t._2):
+                            ls.head().getLength() > t._1 ?
+                                    list(t._2).concat(ls):
+                                    list(ls.head()).concat(this.insert.apply(t, ls.tail()));
 
 
 

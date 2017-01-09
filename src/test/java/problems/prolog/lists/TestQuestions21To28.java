@@ -43,4 +43,28 @@ public class TestQuestions21To28 {
     public void testQuestion25(){
         assertEquals(3, questions21To28.randomPermute(list(1,2,3)).getLength());
     }
+
+
+    //Generate the combinations of K distinct objects chosen from the N elements of a list.
+    @Test
+    public void testQuestion26(){
+        assertEquals ("[[a, b, Nil], [a, c, Nil], [b, c, Nil], Nil]", questions21To28.combinations(2, list('a', 'b', 'c')).toString());
+    }
+
+    //@Test
+    //Group the elements of a set into disjoint subsets.
+    //don't even try to run it.
+    public void testQuestion27(){
+        assertEquals(111, questions21To28.group3(list("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida")).getLength());
+    }
+
+
+
+    //Sorting a list of lists according to length of sublists.
+    @Test
+    public void testQuestion28(){
+        assertEquals("[[c, Nil], [a, b, Nil], [d, e, f, Nil], [x, x, x, x, Nil], Nil]", questions21To28.lsort.apply( list(list('x', 'x', 'x', 'x'), list('a', 'b'), list('c'), list('d', 'e', 'f'))).toString());
+    }
+
+
 }

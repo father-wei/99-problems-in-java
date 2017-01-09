@@ -95,5 +95,9 @@ public class ListTest {
         assertEquals("[1, 2, 3, Nil]", List.range(1, 3).toString());
     }
 
+    @Test
+    public void testDiff(){
+        assertEquals("[1, 3, Nil]", List.diff(list(1, 2, 3), list(2)).toString());
+    }
 
 }

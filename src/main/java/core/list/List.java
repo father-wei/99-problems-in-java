@@ -7,10 +7,11 @@ import core.common.Result;
 import core.common.Tuple;
 import core.tailcall.TailCall;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static core.common.Case.*;
 import static core.tailcall.TailCall.ret;
@@ -188,6 +189,33 @@ public abstract class List<T> {
         return  list.reverse();
     }
 
+
+    public static <T> List<T> diff(List<T> ls1, List<T> ls2){
+        HashMap<T, Integer> map = ls1.foldLeft(new HashMap<>(), (acc, e)-> {acc.put(e, 1); return acc;});
+
+        ls2.foldLeft(map, (acc, e) -> {
+            if(acc.get(e) == 1){
+                acc.put(e, 0);
+            }else{
+                acc.put(e, 1);
+            }
+            return acc;
+        });
+
+        List<T> ls = list();
+
+        for (Map.Entry<T, Integer> entry : map.entrySet()) {
+            T key = entry.getKey();
+            Integer value = entry.getValue();
+            if(value == 1){
+                ls = new Cons<>(key, ls);
+            }
+        }
+
+        return ls.reverse();
+
+    }
+
     @Override
     public boolean equals(Object o){
         return this == o?
@@ -199,6 +227,9 @@ public abstract class List<T> {
                                  equals.apply(this, (List<T>) o).getOrElse(false);
 
     }
+
+
+
 
     private BiFunction<List<T>, List<T>, Result<Boolean>> equals =
             (ls1, ls2) -> match
