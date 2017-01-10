@@ -114,6 +114,17 @@ public class Questions21To28<T> {
                 );
     }
 
+
+    public BiFunction<List<Integer>, List<T>, List<List<List<T>>>> group =
+            (intLs, ls) -> intLs.isEmpty()?
+                    NIL:
+                    this.combinations(intLs.head(), ls).flatMap(
+                            x -> this.group.apply(intLs.tail(), List.diff(ls, x)).map(
+                                    y-> list(x).concat(y)
+                            )
+
+                    );
+
     /*
      *    Question 28
      *    Sorting a list of lists according to length of sublists.

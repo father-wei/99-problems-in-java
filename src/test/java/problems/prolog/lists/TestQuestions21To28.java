@@ -55,7 +55,7 @@ public class TestQuestions21To28 {
     //Group the elements of a set into disjoint subsets.
     //don't even try to run it.
     public void testQuestion27(){
-        assertEquals(111, questions21To28.group3(list("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida")).getLength());
+        assertEquals("", questions21To28.group.apply(list(2,3,4), list("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida")));
     }
 
 
