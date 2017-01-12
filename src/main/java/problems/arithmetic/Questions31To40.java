@@ -2,12 +2,14 @@ package problems.arithmetic;
 
 import core.list.List;
 
+import static core.list.List.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-/**
- * Created by bwei3 on 1/10/17.
- */
+
+
 public class Questions31To40 {
 
     /*
@@ -15,16 +17,16 @@ public class Questions31To40 {
      *    Determine whether a given integer number is prime.
      */
     public boolean isPrime(int i){
-        return isPrime_.apply(2).apply(Math.sqrt(i));
+        return isPrime_.apply(2).apply((int)Math.sqrt(i)).apply(i);
     }
 
-    private Function<Integer, Function<Double, Boolean>> isPrime_ =
-            start -> num ->
-                    start > num ?
+    private Function<Integer, Function<Integer, Function<Integer, Boolean>>> isPrime_ =
+            start -> end -> num ->
+                    start > end ?
                         true:
-                        num % start == 0 ?
+                            num % start == 0 ?
                                 false:
-                                this.isPrime_.apply(start + 1).apply(num);
+                                this.isPrime_.apply(start + 1).apply(end).apply(num);
 
 
 
@@ -69,8 +71,38 @@ public class Questions31To40 {
      *    Determine the prime factors of a given positive integer.
      */
     public List<Integer> primeFactors(int i){
+        return primeFactors_.apply(i, primes(i));
+    }
 
-        return null;
+    private BiFunction<Integer, List<Integer>, List<Integer>> primeFactors_ =
+            (i, primes) ->
+                    isPrime(i) ?
+                            list(i):
+                            i % primes.head() == 0?
+                                 list(primes.head()).concat(this.primeFactors_.apply(i / primes.head(), primes)):
+                                 this.primeFactors_.apply(i, primes.tail());
+
+
+
+
+    // Having some fun with java 8 stream
+    public List<Integer> primes(int end){
+        int[] p =
+        IntStream.rangeClosed(2, end)
+                .parallel()
+                .filter( i ->
+                        IntStream.rangeClosed (2, (int)Math.sqrt(i))
+                                .parallel()
+                                .allMatch     (x -> i % x != 0)
+                ).toArray();
+
+        List ls = list();
+
+        for(int i : p){
+            ls = list(i).concat(ls);
+        }
+
+        return ls.reverse();
     }
 
 

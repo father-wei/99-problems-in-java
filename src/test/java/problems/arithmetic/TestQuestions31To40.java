@@ -15,9 +15,10 @@ public class TestQuestions31To40 {
     //Determine whether a given integer number is prime.
     @Test
     public void testQuestion31(){
-        assertEquals(true,  questions31To40.isPrime(181));
-        assertEquals(false, questions31To40.isPrime(121));
-        assertEquals(true,  questions31To40.isPrime(149));
+        assertEquals(true,   questions31To40.isPrime(181));
+        assertEquals(false,  questions31To40.isPrime(121));
+        assertEquals(true,   questions31To40.isPrime(149));
+        assertEquals(false,  questions31To40.isPrime(105));
     }
 
     //Determine the greatest common divisor of two positive integer numbers.
@@ -37,7 +38,16 @@ public class TestQuestions31To40 {
         assertEquals(4, questions31To40.totient(10));
     }
 
+    @Test
+    public void testGeneratePrimesNumbers(){
+        assertEquals("[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, Nil]",
+                questions31To40.primes(100).toString());
+    }
 
+    @Test
+    public void testQuestion35(){
+        assertEquals("[3, 3, 5, 7, Nil]", questions31To40.primeFactors(315));
+    }
 
 
 }
