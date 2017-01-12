@@ -1,5 +1,6 @@
 package problems.arithmetic;
 
+import core.common.Result;
 import core.common.Tuple;
 import core.list.List;
 import problems.prolog.lists.Questions1To10;
@@ -12,7 +13,7 @@ import java.util.stream.Stream;
 
 
 
-public class Questions31To40 {
+public class Questions31To41 {
 
     Questions1To10<Integer> util = new Questions1To10();
 
@@ -76,7 +77,7 @@ public class Questions31To40 {
      *    Determine the prime factors of a given positive integer.
      */
     public List<Integer> primeFactors(int i){
-        return primeFactors_.apply(i, primes(i));
+        return primeFactors_.apply(i, primes(2, i));
     }
 
     private BiFunction<Integer, List<Integer>, List<Integer>> primeFactors_ =
@@ -91,9 +92,9 @@ public class Questions31To40 {
 
 
     // Having some fun with java 8 stream
-    public List<Integer> primes(int end){
+    public List<Integer> primes(int start, int end){
         int[] p =
-        IntStream.rangeClosed(2, end)
+        IntStream.rangeClosed(start, end)
                 .parallel()
                 .filter( i ->
                         IntStream.rangeClosed (2, (int)Math.sqrt(i))
@@ -125,5 +126,82 @@ public class Questions31To40 {
     }
 
 
+    /*Don't know what this really do.... refactor scala varsion
+     *    @link http://aperiodic.net/phil/scala/s-99/
+     *
+     *    Question 37
+     *    DCalculate Euler's totient function phi(m) (improved).
+     */
+    public int totientImpr(int start){
+        return primeFactorMultiplicity(start)
+                .foldLeft(1, (r, f) ->
+                        r * (f._1 - 1) * (int) Math.pow(f._1, f._2 - 1));
+    }
+
+    /*
+     *    Question 38
+     *    Compare the two methods of calculating Euler's totient function.
+     */
+
+    // this question is for performance test
+    // so test in testing code, not here
+
+
+    /*
+     *    Question 39
+     *    A list of prime numbers.
+     */
+    public List<Integer> listPrimesinRange(int start, int end) {
+        return primes(start, end);
+    }
+
+
+
+    /*
+     *    Question 40
+     *    Goldbach's conjecture.
+     */
+    public  Result<Tuple<Integer, Integer>> goldbach(int num){
+        return num % 2 == 0 ?
+                Result.<Tuple<Integer, Integer>>success(goldbach_.apply(num, listPrimesinRange(2, num))) :
+                num < 2?
+                        Result.failure("Number has to be even number greater than 2"):
+                        Result.failure("Number has to be even number greater than 2");
+    }
+
+    private BiFunction<Integer,List<Integer>, Tuple<Integer, Integer>> goldbach_ =
+            (num, ls) ->  isPrime(num - ls.head())?
+                    new Tuple<>(ls.head(), num - ls.head()) :
+                    this.goldbach_.apply(num, ls.tail());
+
+
+    /*
+     *    Question 41
+     *    A list of Goldbach compositions.
+     */
+    public List<Tuple<Integer, Tuple<Integer, Integer>>> printGoldbachList(int start, int end){
+        int[] ins = IntStream.rangeClosed(start, end)
+                    .filter(x -> x % 2 == 0)
+                    .toArray();
+
+        List<Integer> ls = arryToList(ins);
+
+        return ls.map(x-> new Tuple<>(x, goldbach(x).getOrThrow()));
+    }
+
+    private List<Integer> arryToList(int[] ints){
+        List ls = list();
+        for (int i : ints){
+            ls = list(i).concat(ls);
+        }
+        return ls.reverse();
+    }
+
+    public List<Tuple<Integer, Tuple<Integer, Integer>>> printGoldbachListB(int start, int end, int primeStart){
+        return printGoldbachList(start, end)
+                    .foldRight(NIL, (e, acc)-> e._2._1 > primeStart && e._2._2 > primeStart?
+                            list(e).concat(acc):
+                            acc);
+    }
 
 }
