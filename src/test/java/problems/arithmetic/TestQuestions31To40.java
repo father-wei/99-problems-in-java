@@ -49,5 +49,8 @@ public class TestQuestions31To40 {
         assertEquals("[3, 3, 5, 7, Nil]", questions31To40.primeFactors(315));
     }
 
-
+    @Test
+    public void testQuestion36(){
+        assertEquals("[(3, 2), (5, 1), (7, 1), Nil]", questions31To40.primeFactorMultiplicity(315).toString());
+    }
 }

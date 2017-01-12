@@ -1,6 +1,8 @@
 package problems.arithmetic;
 
+import core.common.Tuple;
 import core.list.List;
+import problems.prolog.lists.Questions1To10;
 
 import static core.list.List.*;
 import java.util.function.BiFunction;
@@ -11,6 +13,8 @@ import java.util.stream.Stream;
 
 
 public class Questions31To40 {
+
+    Questions1To10<Integer> util = new Questions1To10();
 
     /*
      *    Question 31
@@ -66,6 +70,7 @@ public class Questions31To40 {
                    );
     }
 
+
     /*
      *    Question 35
      *    Determine the prime factors of a given positive integer.
@@ -105,6 +110,19 @@ public class Questions31To40 {
         return ls.reverse();
     }
 
+
+    /*
+     *    Question 36
+     *    Determine the prime factors of a given positive integer (2).
+     */
+    public List<Tuple<Integer,Integer>> primeFactorMultiplicity(int i){
+        Function <Integer, List<Integer>>  primeFactorsFn = x-> primeFactors(x);
+        return primeFactorsFn.andThen(util.encode)
+                             .apply(i)
+                             .map(tuple -> new Tuple<Integer, Integer>(tuple._2, tuple._1));
+
+
+    }
 
 
 
